@@ -1,0 +1,61 @@
+<div class="container">
+
+    <div [hidden]="enviado">
+        <h1>BOKU NO HERO</h1>
+
+        <form (ngSubmit)="onSubmit()" #heroeForm="ngForm">
+            <div class="form-group">
+
+                <label for="nombre">Nombre: </label>
+                <input type="text" class="form-control" id="nombre"
+                required [(ngModel)]="modelo.nombre" name="nombre" #nombre="ngModel" />
+                <div [hidden]="nombre.valid || nombre.pristine" class="alert alert-danger">
+                    El nombre es Obligatorio
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="identidad">Identidad secreta: </label>
+                <input type="text" class="form-control" id="identidad"
+                [(ngModel)] = "modelo.identidad" name="identidad" />
+            </div>
+
+            <div class="form-group">
+                <label for="poder">Poder: </label>
+                <select class="form-control" id="poder" required
+                [(ngModel)]="modelo.poder" name="poder" #poder="ngModel">
+
+                    <option *ngFor="let poder of poderes" [value]="poder">
+                        {{ poder }}
+                    </option>
+            
+                </select>
+                <div [hidden]="poder.valid || poder.pristine" class="alert alert-danger">
+                    Debes seleccionar un poder
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-success" [disabled]="!heroeForm.form.valid">Enviar</button>
+            <button type="button" class="btn btn-default" (click)="newHeroe();heroeForm.reset()">Limpiar</button>
+        </form>
+    </div>
+
+    <div [hidden]="!enviado">
+        <h3>Enviaste los siguientes Datos: </h3>
+        <div class="row">
+            <div class="col-xs-3">Nombre: </div>
+            <div class="col-xs-9">{{ modelo.nombre }}</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3">Identidad: </div>
+            <div class="col-xs-9">{{ modelo.identidad }}</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3">Poder: </div>
+            <div class="col-xs-9">{{ modelo.poder }}</div>
+        </div>
+        <br />
+        <button class="btn btn-primary" (click)="enviado=false">Editar</button>
+    </div>
+
+</div>
